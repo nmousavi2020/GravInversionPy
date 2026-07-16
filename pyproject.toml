@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "GravInversionPy"
+version = "0.1.0"
+description = "3D gravity forward modeling and Tikhonov inversion in Python"
+authors = [
+    {name = "Naeim Mousavi"}
+]
+
+readme = "README.md"
+
+requires-python = ">=3.12"
+
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib"
+]
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
