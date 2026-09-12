@@ -1,344 +1,382 @@
-\# GravInversionPy
+# GravInversionPy
 
+## 3D Gravity Forward Modeling and Tikhonov Inversion in Python
 
+**Author:** Naeim Mousavi
 
-\## 3D Gravity Forward Modeling and Tikhonov Inversion in Python
+GravInversionPy is an open-source Python package for **3D gravity forward modeling and inversion**.
 
+The package implements **Tikhonov regularization with a 3D smoothness constraint** to recover subsurface density distributions from gravity observations.
 
+---
 
-\*\*Author:\*\* Naeim Mousavi
+## Features
 
+GravInversionPy provides tools for:
 
+* Gravity data loading
+* Regular grid subsampling
+* 3D voxel model generation
+* Gravity forward modeling
+* Transpose gravity operator
+* 3D smoothness regularization
+* Tikhonov inversion using the Conjugate Gradient solver
+* Density model visualization
+* Forward gravity validation plots
 
-GravInversionPy is an open-source Python package for 3D gravity inversion and forward modeling. It implements Tikhonov regularization with a 3D smoothness constraint to recover subsurface density distributions from gravity observations.
+---
 
+## Package Structure
 
-
-\## Features
-
-
-
-\* Gravity data loading
-
-\* Regular grid subsampling
-
-\* 3D voxel model generation
-
-\* Gravity forward modeling
-
-\* Transpose gravity operator
-
-\* 3D smoothness regularization
-
-\* Tikhonov inversion using Conjugate Gradient solver
-
-\* Density model visualization
-
-\* Forward gravity validation plots
-
-
-
-\## Package Structure
-
-
-
-```text
-
-GravInversionPy
-
+```text id="6yrb9r"
+GravInversionPy/
 │
-
-├── data
-
-│   └── Gravity\_syn.txt
-
+├── data/
+│   └── Gravity_syn.txt
 │
-
-├── outputs
-
-│   ├── density\_slice.png
-
-│   ├── observed\_vs\_forward.png
-
-│   └── gravity\_forward\_contour.png
-
+├── outputs/
+│   ├── density_slice.png
+│   ├── observed_vs_forward.png
+│   └── gravity_forward_contour.png
 │
-
-├── src
-
-│   └── grav\_inversion\_py
-
-│       ├── \_\_init\_\_.py
-
+├── src/
+│   └── grav_inversion_py/
+│       ├── __init__.py
 │       ├── io.py
-
 │       ├── model.py
-
 │       ├── forward.py
-
 │       ├── regularization.py
-
 │       ├── inversion.py
-
 │       └── plotting.py
-
 │
-
-├── examples
-
-│   └── run\_inversion.py
-
+├── examples/
+│   └── run_inversion.py
 │
-
-├── tests
-
+├── tests/
 │
-
 ├── LICENSE
-
 ├── README.md
-
 └── pyproject.toml
-
 ```
 
+### Main Components
 
+**`src/grav_inversion_py/io.py`**
 
-\## Installation
+Functions for loading and preparing gravity observations.
 
+**`src/grav_inversion_py/model.py`**
 
+Functions for constructing the 3D voxel model and associated model parameters.
+
+**`src/grav_inversion_py/forward.py`**
+
+Implementation of the gravity forward operator and forward gravity calculations.
+
+**`src/grav_inversion_py/regularization.py`**
+
+Construction of the 3D smoothness regularization operator.
+
+**`src/grav_inversion_py/inversion.py`**
+
+Tikhonov inversion routines using an iterative Conjugate Gradient solver.
+
+**`src/grav_inversion_py/plotting.py`**
+
+Functions for visualizing density models and comparing observed and forward-calculated gravity.
+
+**`examples/run_inversion.py`**
+
+Example script demonstrating the complete forward-modeling and inversion workflow.
+
+---
+
+# Installation
+
+## Requirements
+
+Recommended environment:
+
+* Python >= 3.12
+* NumPy
+* SciPy
+* Matplotlib
+
+---
+
+## Clone the Repository
 
 Clone the repository:
 
-
-
-```bash
-
+```bash id="j7n0w5"
 git clone https://github.com/nmousavi2020/GravInversionPy.git
+```
 
+Move into the project directory:
+
+```bash id="3n6qva"
 cd GravInversionPy
-
 ```
 
+---
 
+## Install the Package
 
-Install the package:
+Install GravInversionPy in editable mode:
 
-
-
-```bash
-
+```bash id="8hdq3a"
 pip install -e .
-
 ```
 
+For development, it is recommended to use a virtual environment.
 
+### Create a Virtual Environment
 
-\## Requirements
+```bash id="z8o7xn"
+python -m venv .venv
+```
 
+Activate it on Windows:
 
+```bash id="mbg9v1"
+.venv\Scripts\activate
+```
 
-\* Python >= 3.12
+Activate it on Linux/macOS:
 
-\* NumPy
+```bash id="d2rq7u"
+source .venv/bin/activate
+```
 
-\* SciPy
+Then install the package:
 
-\* Matplotlib
+```bash id="5v8p3s"
+pip install -e .
+```
 
+---
 
-
-\## Quick Start
-
-
+# Quick Start
 
 Run the complete inversion workflow:
 
-
-
-```bash
-
-python examples/run\_inversion.py
-
+```bash id="g0x4xq"
+python examples/run_inversion.py
 ```
-
-
 
 The workflow includes:
 
-
-
+```text id="a0qz2j"
+Gravity Observations
+        │
+        ▼
+Regular Grid Subsampling
+        │
+        ▼
+3D Voxel Model Generation
+        │
+        ▼
+Forward Gravity Calculation
+        │
+        ▼
+Tikhonov Regularized Inversion
+        │
+        ▼
+Recovered Density Model
+        │
+        ▼
+Visualization and Validation
 ```
 
-Gravity observations
+---
 
-&#x20;         |
+# Method
 
-&#x20;         ↓
+The package solves the linear inverse gravity problem:
 
-Regular grid subsampling
-
-&#x20;         |
-
-&#x20;         ↓
-
-3D voxel model generation
-
-&#x20;         |
-
-&#x20;         ↓
-
-Forward gravity calculation
-
-&#x20;         |
-
-&#x20;         ↓
-
-Tikhonov regularized inversion
-
-&#x20;         |
-
-&#x20;         ↓
-
-Recovered density model
-
-&#x20;         |
-
-&#x20;         ↓
-
-Visualization and validation
-
-```
-
-
-
-\## Method
-
-
-
-The package solves the inverse gravity problem:
-
-
-
-\[
-
+$$
 Gm = d
-
-]
-
-
-
-using Tikhonov regularization:
-
-
-
-\[
-
-(G^T G + \\lambda^2 L^T L)m = G^T d
-
-]
-
-
+$$
 
 where:
 
+* **$G$** is the gravity forward operator
+* **$m$** is the unknown density model
+* **$d$** is the observed gravity data
 
+To stabilize the inversion, GravInversionPy uses Tikhonov regularization with a 3D smoothness constraint:
 
-\* \*\*G\*\* is the gravity forward operator
+$$
+\left(G^T G + \lambda^2 L^T L\right)m = G^T d
+$$
 
-\* \*\*m\*\* is the unknown density model
+where:
 
-\* \*\*d\*\* is the observed gravity data
+* **$G$** is the gravity forward operator
+* **$m$** is the unknown density model
+* **$d$** is the observed gravity data
+* **$L$** is the 3D smoothness regularization operator
+* **$\lambda$** is the regularization parameter
 
-\* \*\*L\*\* is the 3D smoothness operator
+The regularization term promotes smooth spatial variations in the recovered density model and helps reduce the effects of noise and ill-conditioning in the inverse problem.
 
-\* \*\*λ\*\* is the regularization parameter
+The solution is obtained using an iterative **Conjugate Gradient (CG)** solver.
 
+---
 
+# Forward Modeling
 
-The solution is obtained using the Conjugate Gradient (CG) iterative solver.
+The forward-modeling component calculates the gravity response generated by the 3D density distribution.
 
-
-
-\## Output Examples
-
-
-
-\### Inverted Density Model
-
-
-
-!\[Density Slice](outputs/density\_slice.png)
-
-
-
-\### Observed vs Forward Gravity
-
-
-
-!\[Observed vs Forward](outputs/observed\_vs\_forward.png)
-
-
-
-\### Forward Gravity Map
-
-
-
-!\[Forward Gravity](outputs/gravity\_forward\_contour.png)
-
-
-
-\## Data Format
-
-
-
-Input gravity file:
-
-
+The general workflow is:
 
 ```text
-
-X(km)   Y(km)   gz(mGal)
-
-
-
-10.0    5.0     12.5
-
-12.0    5.0     13.1
-
-...
-
+3D Density Model
+       │
+       ▼
+Voxel Geometry
+       │
+       ▼
+Gravity Forward Operator
+       │
+       ▼
+Predicted Gravity
 ```
 
+The calculated gravity can then be compared with the observed gravity data to evaluate the quality of the model.
 
+---
 
-\## Author
+# Regularization
 
+The inversion uses a 3D smoothness constraint to promote physically reasonable spatial variations in the recovered density distribution.
 
+The regularization operator is represented by:
 
-\*\*Naeim Mousavi\*\*
+$$
+L
+$$
 
+and contributes the term:
 
+$$
+\lambda^2 L^T L
+$$
 
-\## Citation
+to the regularized inverse problem.
 
+The regularization parameter $\lambda$ controls the balance between data fitting and model smoothness.
 
+---
+
+# Output Examples
+
+The repository contains example outputs generated by the workflow.
+
+## Inverted Density Model
+
+![Density Slice](outputs/density_slice.png)
+
+The density slice visualization shows a representative section through the recovered 3D density model.
+
+---
+
+## Observed vs Forward Gravity
+
+![Observed vs Forward](outputs/observed_vs_forward.png)
+
+This figure compares the observed gravity data with the gravity response calculated from the recovered density model.
+
+---
+
+## Forward Gravity Map
+
+![Forward Gravity](outputs/gravity_forward_contour.png)
+
+The forward gravity map shows the spatial distribution of the calculated gravity response.
+
+---
+
+# Data Format
+
+The input gravity data are provided as a text file:
+
+```text id="9j6h0x"
+X(km)   Y(km)   gz(mGal)
+
+10.0    5.0     12.5
+12.0    5.0     13.1
+...
+```
+
+The expected columns are:
+
+| Column | Description              | Unit |
+| ------ | ------------------------ | ---- |
+| `X`    | X coordinate             | km   |
+| `Y`    | Y coordinate             | km   |
+| `gz`   | Observed gravity anomaly | mGal |
+
+The exact formatting should be compatible with the data-loading functions provided in the package.
+
+---
+
+# Reproducibility
+
+For reproducible results, use consistent:
+
+* Input gravity data
+* Model dimensions
+* Grid spacing
+* Regularization parameters
+* Solver settings
+* Python version
+* Package versions
+
+The example workflow provided in `examples/run_inversion.py` demonstrates the configured inversion procedure.
+
+---
+
+# Scientific Considerations
+
+Gravity inversion is an inherently non-unique and ill-posed geophysical problem.
+
+The recovered density distribution depends on:
+
+* Gravity-data coverage
+* Data quality and noise
+* Model parameterization
+* Voxel dimensions
+* Regularization strength
+* Smoothness assumptions
+* Forward-modeling formulation
+
+Therefore, the recovered density model should be interpreted within the assumptions and limitations of the inversion framework.
+
+---
+
+# Author
+
+**Naeim Mousavi**
+
+GravInversionPy is developed as an open-source Python package for 3D gravity forward modeling, regularized inversion, and subsurface density-model visualization.
+
+---
+
+# Citation
 
 If you use GravInversionPy in research, please cite:
 
+**Mousavi, N. (2026).**
 
+*GravInversionPy: Python tools for 3D gravity forward modeling and Tikhonov inversion.*
 
-Naeim Mousavi (2026).
+A BibTeX entry can be added to the repository if a formal publication or software DOI becomes available.
 
-GravInversionPy: Python tools for 3D gravity forward modeling and Tikhonov inversion.
+---
 
+# License
 
+This project is released under the **MIT License**.
 
-\## License
-
-
-
-MIT License
-
-
-
+See the `LICENSE` file for the complete license text.
